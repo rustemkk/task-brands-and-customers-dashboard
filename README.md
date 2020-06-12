@@ -1,8 +1,10 @@
-Deployed to github pages: [http://rustemkk.github.io/task-tv-shows](http://rustemkk.github.io/task-tv-shows)
-
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `docker-compose up`
+
+Builds and serves in docker container.
 
 ### `npm install`
 
@@ -22,10 +24,9 @@ Runs tests in watch mode.
 
 Builds the app for production to the `build` folder.
 
-### `npm run deploy`
+### `npm run serve`
 
-Builds & deploys application to github pages.
-<br />
+Serves build folder on `localhost:4000`.
 <br />
 <br />
 <br />
