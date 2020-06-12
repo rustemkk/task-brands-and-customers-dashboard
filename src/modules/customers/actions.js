@@ -18,3 +18,15 @@ export const createCustomer = (email, password, firstName, lastName) => ({
   firstName,
   lastName,
 });
+
+export const createCustomerBrand = (customerBrand) => ({
+  type: customersConstants.CREATE_CUSTOMER_BRAND_REQUEST,
+  customerBrand,
+});
+
+export const updateCustomerBrand = (customerId, brandId, customerBrand) => ({
+  type: customersConstants.UPDATE_CUSTOMER_BRAND_REQUEST,
+  customerId,
+  brandId,
+  customerBrand,
+});

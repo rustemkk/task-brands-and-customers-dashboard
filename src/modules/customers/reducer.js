@@ -22,7 +22,23 @@ export const customersIds = (state = [], action) => {
   }
 };
 
+export const customerBrands = (state = [], action) => {
+  switch (action.type) {
+    case customersConstants.CREATE_CUSTOMER_BRAND_REQUEST:
+      return [...state, action.customerBrand];
+    case customersConstants.UPDATE_CUSTOMER_BRAND_REQUEST: {
+      const newState = [...state];
+      const index = newState.findIndex(cb => cb.customerId === action.customerId && cb.brandId === action.brandId);
+      newState[index] = { ...newState[index], ...action.customerBrand };
+      return newState;
+    }
+    default:
+      return state; 
+  }
+};
+
 export default combineReducers({
   customers,
   customersIds,
+  customerBrands,
 });

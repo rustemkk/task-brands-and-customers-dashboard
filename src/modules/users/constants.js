@@ -7,3 +7,9 @@ export const SIGNUP_REQUEST = 'users/SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'users/SIGNUP_SUCCESS';
 
 export const SET_ERROR = 'users/SET_ERROR';
+
+export const FOLLOW_BRAND_REQUEST = 'users/FOLLOW_BRAND_REQUEST';
+export const FOLLOW_BRAND_SUCCESS = 'users/FOLLOW_BRAND_SUCCESS';
+
+export const UNFOLLOW_BRAND_REQUEST = 'users/UNFOLLOW_BRAND_REQUEST';
+export const UNFOLLOW_BRAND_SUCCESS = 'users/UNFOLLOW_BRAND_SUCCESS';

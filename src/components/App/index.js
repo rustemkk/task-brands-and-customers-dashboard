@@ -18,8 +18,9 @@ import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 
 import AppMenu from 'components/AppMenu';
 // import BrandPage from 'components/BrandPage';
-// import BrandsPage from 'components/BrandsPage';
+import BrandsPage from 'components/BrandsPage';
 import LogInPage from 'components/LogInPage';
+import NewsPage from 'components/NewsPage';
 import SignUpPage from 'components/SignUpPage';
 import { loadBrands } from 'modules/brands/actions';
 import { selectAllBrands } from 'modules/brands/selectors';
@@ -119,6 +120,7 @@ const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+
   const currentUser = useSelector(selectCurrentUser);
   const [isMenuOpen, setIsMenuOpen] = useLocalStorage('isAppMenuOpen', true);
 
@@ -126,10 +128,11 @@ const App = () => {
   const customers = useSelector(selectAllCustomers);
   useEffect(() => {
     // load initial brands and customers
-    dispatch(loadBrands());
-    dispatch(loadCustomers());
-  }, [dispatch]);
+    brands.length === 0 && dispatch(loadBrands());
+    customers.length === 0 && dispatch(loadCustomers());
+  }, []); // eslint-disable-line
 
+  // autoredirects
   const noAuthRoutes = ['/log-in', '/sign-up'];
   if (!currentUser && !noAuthRoutes.includes(location.pathname)) {
     history.push('/log-in');
@@ -185,9 +188,9 @@ const App = () => {
             <Container maxWidth={false} className={s.container}>
               <Grid container spacing={3}>
                 <Switch>
-                  {/* <Route exact path="/" component={BrandsPage} /> */}
+                  <Route exact path="/brands" component={BrandsPage} />
                   {/* <Route exact path="/brand/:brandId" component={BrandPage} /> */}
-                  <Route cexact path="/" component={() => <div>Welcome!</div>} />
+                  <Route cexact path="/" component={NewsPage} />
                   <Route component={() => <div>Page not found</div>} />
                 </Switch>
               </Grid>

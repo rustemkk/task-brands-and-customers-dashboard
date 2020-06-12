@@ -28,3 +28,11 @@ export const selectCustomerByEmailAndPassword = (email, password) => createSelec
   selectAllCustomers,
   (customers) => customers.find(c => c.email === email && c.password === password)
 );
+
+export const selectAllCustomerBrands = (state) =>
+  get(state, 'customers.customerBrands') || [];
+
+export const selectCustomerBrandsByCustomerId = (customerId) => createSelector(
+  selectAllCustomerBrands,
+  (customerBrands) => customerBrands.filter(cb => cb.customerId === customerId)
+);

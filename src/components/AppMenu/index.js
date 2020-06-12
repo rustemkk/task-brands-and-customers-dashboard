@@ -4,6 +4,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
@@ -27,6 +28,14 @@ const AppMenu = () => {
 
   return (
     <List>
+      <NavLink className={s.navLink} to="/">
+        <ListItem button>
+          <ListItemIcon >
+            <HomeIcon className={s.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+      </NavLink>
       <NavLink className={s.navLink} to="/brands">
         <ListItem button>
           <ListItemIcon >

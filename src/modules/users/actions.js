@@ -25,3 +25,13 @@ export const signUp = (data) => ({
   type: usersConstants.SIGNUP_REQUEST,
   data,
 });
+
+export const followBrand = (brandId) => ({
+  type: usersConstants.FOLLOW_BRAND_REQUEST,
+  brandId,
+});
+
+export const unfollowBrand = (brandId) => ({
+  type: usersConstants.UNFOLLOW_BRAND_REQUEST,
+  brandId,
+});
