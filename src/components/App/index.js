@@ -17,8 +17,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 
 import AppMenu from 'components/AppMenu';
-// import BrandPage from 'components/BrandPage';
 import BrandsPage from 'components/BrandsPage';
+import CustomersPage from 'components/CustomersPage';
 import LogInPage from 'components/LogInPage';
 import NewsPage from 'components/NewsPage';
 import SignUpPage from 'components/SignUpPage';
@@ -34,7 +34,7 @@ import { useLocalStorage } from 'utils/hooks';
 const getAppTitle = (pathname) => {
   switch (pathname) {
     case '/':
-      return 'Dashboard';
+      return 'Dashboard - News';
     case '/brands':
       return 'Dashboard - Brands';
     case '/customers':
@@ -164,7 +164,10 @@ const App = () => {
                 {getAppTitle(location.pathname)}
               </Typography>
               <Typography align="right" variant="subtitle1" noWrap>
-                {currentUser.firstName + ' ' + currentUser.lastName}
+                {currentUser.role === 'customer' ?
+                  `${currentUser.firstName} ${currentUser.lastName}` :
+                  `${currentUser.name} [${currentUser.points}]`
+                }
               </Typography>
               <IconButton color="inherit" onClick={() => dispatch(logOut())}>
                 <ExitToApp />
@@ -189,7 +192,7 @@ const App = () => {
               <Grid container spacing={3}>
                 <Switch>
                   <Route exact path="/brands" component={BrandsPage} />
-                  {/* <Route exact path="/brand/:brandId" component={BrandPage} /> */}
+                  <Route exact path="/customers" component={CustomersPage} />
                   <Route cexact path="/" component={NewsPage} />
                   <Route component={() => <div>Page not found</div>} />
                 </Switch>

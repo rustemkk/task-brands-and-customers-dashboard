@@ -30,3 +30,8 @@ export const updateCustomerBrand = (customerId, brandId, customerBrand) => ({
   brandId,
   customerBrand,
 });
+
+export const updateCustomerBrands = (customerBrands) => ({
+  type: customersConstants.UPDATE_CUSTOMER_BRANDS_REQUEST,
+  customerBrands,
+});

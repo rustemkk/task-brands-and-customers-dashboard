@@ -20,3 +20,9 @@ export const createBrand = (email, password, name, symbol, logo, points) => ({
   logo,
   points,
 });
+
+export const updateBrand = (brandId, brand) => ({
+  type: brandsConstants.UPDATE_BRAND_REQUEST,
+  brandId, 
+  brand,
+});

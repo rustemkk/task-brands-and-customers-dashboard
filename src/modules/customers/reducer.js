@@ -32,8 +32,18 @@ export const customerBrands = (state = [], action) => {
       newState[index] = { ...newState[index], ...action.customerBrand };
       return newState;
     }
+    case customersConstants.UPDATE_CUSTOMER_BRANDS_REQUEST: {
+      const newState = [...state];
+      action.customerBrands.forEach(customerBrand => {
+        const index = newState.findIndex(cb =>
+          cb.customerId === customerBrand.customerId && cb.brandId === customerBrand.brandId
+        );
+        newState[index] = { ...newState[index], ...customerBrand };
+      });
+      return newState;
+    }
     default:
-      return state; 
+      return state;
   }
 };
 

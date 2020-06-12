@@ -8,6 +8,12 @@ export const brands = (state = {}, action) => {
   switch (action.type) {
     case brandsConstants.LOAD_BRANDS_SUCCESS:
       return { ...state, ...action.brands };
+    case brandsConstants.UPDATE_BRAND_REQUEST: {
+      return {
+        ...state,
+        [action.brandId]: { ...state[action.brandId], ...action.brand }
+      };
+    }
     default:
       return state;
   }

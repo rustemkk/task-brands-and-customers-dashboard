@@ -9,6 +9,8 @@ export const currentUser = (state = null, action) => {
       return action.user;
     case usersConstants.LOGOUT_REQUEST:
       return null;
+    case usersConstants.UPDATE_CURRENT_USER_REQUEST:
+      return { ...state, ...action.user };
     default:
       return state;
   }

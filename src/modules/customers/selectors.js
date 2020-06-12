@@ -36,3 +36,8 @@ export const selectCustomerBrandsByCustomerId = (customerId) => createSelector(
   selectAllCustomerBrands,
   (customerBrands) => customerBrands.filter(cb => cb.customerId === customerId)
 );
+
+export const selectCustomerBrandsByBrandId = (brandId) => createSelector(
+  selectAllCustomerBrands,
+  (customerBrands) => customerBrands.filter(cb => cb.brandId === brandId)
+);

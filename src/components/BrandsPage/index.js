@@ -56,6 +56,12 @@ const BrandsPage = () => {
       brands.filter(b => customerBrands.find(cb => cb.brandId === b.id && cb.isFollowing));
   }, [brands, customerBrands, isOnlyFollowing]);
 
+  const renderPoints = (brandId) => {
+    const customerBrand = customerBrands.find(cb => cb.brandId === brandId);
+    const points = customerBrand && customerBrand.points;
+    return `Your loyalty points: ${points || 0}`;
+  }
+
   return (
     <Container className={s.cardGrid}>
       <Grid className={s.checkbox} item xs={12}>
@@ -79,22 +85,22 @@ const BrandsPage = () => {
                 <Typography gutterBottom variant="h5" component="h2">
                   {brand.name}
                 </Typography>
+                <Typography gutterBottom>
+                  {renderPoints(brand.id)}
+                </Typography>
                 <Typography>
                   This awesome brand name is "{brand.name}", and its symbol is "{brand.symbol}". Founded in 2020.
                 </Typography>
               </CardContent>
               <CardActions>
                 {customerBrands.find(cb => cb.brandId === brand.id && cb.isFollowing) ?
-                  <Button size="small" color="primary" variant="outlined" onClick={() => dispatch(unfollowBrand(brand.id))}>
+                  <Button fullWidth color="primary" variant="outlined" onClick={() => dispatch(unfollowBrand(brand.id))}>
                     UNFOLLOW
                   </Button> :
-                  <Button size="small" color="primary" variant="contained" onClick={() => dispatch(followBrand(brand.id))}>
+                  <Button fullWidth color="primary" variant="contained" onClick={() => dispatch(followBrand(brand.id))}>
                     FOLLOW
                   </Button>
                 }
-                <Button size="small" color="primary">
-                  VIEW
-                </Button>
               </CardActions>
             </Card>
           </Grid>

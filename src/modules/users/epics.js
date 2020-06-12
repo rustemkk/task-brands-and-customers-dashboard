@@ -1,14 +1,11 @@
 import { combineEpics } from 'redux-observable';
+import { of } from 'rxjs';
 import { delay, mergeMap, tap } from 'rxjs/operators';
 
 import * as brandsActions from 'modules/brands/actions';
-import { selectBrandByEmail, selectBrandByEmailAndPassword } from 'modules/brands/selectors';
+import * as brandSelectors from 'modules/brands/selectors';
 import * as customersActions from 'modules/customers/actions';
-import {
-  selectCustomerBrandsByCustomerId,
-  selectCustomerByEmail,
-  selectCustomerByEmailAndPassword
-} from 'modules/customers/selectors';
+import * as customersSelectors from 'modules/customers/selectors';
 import history from 'utils/history'
 
 import * as usersActions from './actions';
@@ -23,10 +20,10 @@ export const logInEpic = (action$, state$) =>
       delay(300),
       mergeMap(async ({ email, password }) => {
         let role = 'customer';
-        let user = selectCustomerByEmailAndPassword(email, password)(state$.value);
+        let user = customersSelectors.selectCustomerByEmailAndPassword(email, password)(state$.value);
         if (!user) {
           role = 'brand';
-          user = selectBrandByEmailAndPassword(email, password)(state$.value);
+          user = brandSelectors.selectBrandByEmailAndPassword(email, password)(state$.value);
         }
         if (user) {
           return usersActions.logInSuccess({ ...user, role });
@@ -42,8 +39,8 @@ export const signUpEpic = (action$, state$) =>
     .pipe(
       delay(300),
       mergeMap(async ({ data }) => {
-        const customer = selectCustomerByEmail(data.email)(state$.value);
-        const brand = selectBrandByEmail(data.email)(state$.value);
+        const customer = customersSelectors.selectCustomerByEmail(data.email)(state$.value);
+        const brand = brandSelectors.selectBrandByEmail(data.email)(state$.value);
         if (customer || brand) {
           return usersActions.setError('This email already exist on the platform');
         }
@@ -62,7 +59,7 @@ export const followBrandEpic = (action$, state$) =>
     .pipe(
       mergeMap(async ({ brandId }) => {
         const currentUserId = selectCurrentUserId(state$.value);
-        const customerBrands = selectCustomerBrandsByCustomerId(currentUserId)(state$.value);
+        const customerBrands = customersSelectors.selectCustomerBrandsByCustomerId(currentUserId)(state$.value);
         const customerBrand = customerBrands.find(cb => cb.customerId === currentUserId && cb.brandId === brandId);
         if (!customerBrand) {
           return customersActions.createCustomerBrand({ customerId: currentUserId, brandId, points: 0, isFollowing: true });
@@ -79,7 +76,7 @@ export const unfollowBrandEpic = (action$, state$) =>
     .pipe(
       mergeMap(async ({ brandId }) => {
         const currentUserId = selectCurrentUserId(state$.value);
-        const customerBrands = selectCustomerBrandsByCustomerId(currentUserId)(state$.value);
+        const customerBrands = customersSelectors.selectCustomerBrandsByCustomerId(currentUserId)(state$.value);
         const customerBrand = customerBrands.find(cb => cb.customerId === currentUserId && cb.brandId === brandId);
         if (customerBrand && customerBrand.isFollowing) {
           return customersActions.updateCustomerBrand(currentUserId, brandId, { isFollowing: false });
@@ -88,9 +85,31 @@ export const unfollowBrandEpic = (action$, state$) =>
       }),
     );
 
+export const givePointsEpic = (action$, state$) =>
+  action$
+    .ofType(usersConstants.GIVE_POINTS_REQUEST)
+    .pipe(
+      mergeMap(({ customerIds, points }) => {
+        const currentUserId = selectCurrentUserId(state$.value);
+        const customerBrands = customersSelectors.selectCustomerBrandsByBrandId(currentUserId)(state$.value);
+        const newCustomerBrands = customerIds.map(customerId => {
+          const customerBrand = customerBrands.find(cb => cb.customerId === customerId);
+          return { ...customerBrand, points: customerBrand.points + points };
+        });
+        const brand = brandSelectors.selectBrandById(currentUserId)(state$.value);
+        const brandPoints = brand.points - newCustomerBrands.length * points;
+        return of(
+          customersActions.updateCustomerBrands(newCustomerBrands),
+          brandsActions.updateBrand(currentUserId, { points: brandPoints }),
+          usersActions.updateCurrentUser({ points: brandPoints }),
+        );
+      }),
+    );
+
 export default combineEpics(
   logInEpic,
   signUpEpic,
   followBrandEpic,
   unfollowBrandEpic,
+  givePointsEpic,
 );

@@ -35,3 +35,14 @@ export const unfollowBrand = (brandId) => ({
   type: usersConstants.UNFOLLOW_BRAND_REQUEST,
   brandId,
 });
+
+export const givePoints = (customerIds, points) => ({
+  type: usersConstants.GIVE_POINTS_REQUEST,
+  customerIds,
+  points,
+});
+
+export const updateCurrentUser = (user) => ({
+  type: usersConstants.UPDATE_CURRENT_USER_REQUEST,
+  user,
+});
