@@ -12,7 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 
@@ -126,7 +126,7 @@ const App = () => {
 
   const brands = useSelector(selectAllBrands);
   const customers = useSelector(selectAllCustomers);
-  useEffect(() => {
+  useLayoutEffect(() => {
     // load initial brands and customers
     brands.length === 0 && dispatch(loadBrands());
     customers.length === 0 && dispatch(loadCustomers());

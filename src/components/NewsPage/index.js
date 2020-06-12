@@ -11,7 +11,7 @@ import React from 'react';
 
 const posts = [
   {
-    id: uniqueId,
+    id: uniqueId(),
     header: 'Gemini Eyes Singapore Expansion With New Asia Pacific Managing Director',
     text: `
       The Gemini crypto exchange has set its sights on an expansion into Singapore with the appointment of a Managing Director for the Asia-Pacific region.
@@ -29,7 +29,7 @@ const posts = [
     picture: 'https://blockchainstock.blob.core.windows.net/features/80B9C44476C1B953B3198D79A1D5BE72147167872433DB45482D6C284275FE9B.jpg',
   },
   {
-    id: uniqueId,
+    id: uniqueId(),
     header: 'The Algorand Foundation to Integrate Chainalysis KYT for Transaction Monitoring and Compliance',
     text: `
       The Algorand Foundation will be leveraging Chainalysis’ Know Your Transaction (KYT) for transaction monitoring and compliance processes after its integration. 
@@ -84,7 +84,7 @@ const NewsPage = () => {
                   {post.header}
                 </Typography>
                 <Typography>
-                  <div dangerouslySetInnerHTML={{ __html: post.text }} />
+                  <span dangerouslySetInnerHTML={{ __html: post.text }} />
                 </Typography>
               </CardContent>
             </Card>
