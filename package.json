@@ -7,7 +7,6 @@
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
-    "fsevents": "^1.2.11",
     "lodash": "^4.17.15",
     "normalizr": "^3.5.0",
     "prop-types": "^15.7.2",
@@ -21,12 +20,7 @@
     "reselect": "^4.0.0",
     "serve": "^11.3.2"
   },
-  "devDependencies": {
-    "gh-pages": "^2.2.0"
-  },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
